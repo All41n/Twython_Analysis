@@ -37,3 +37,101 @@ average_user_age=[56,27,45,54,25,46,50,32,46,54,33,23,20,24,37,51,25,48,49,
 usability_rating = [1,2,2,4,1,2,3,3,4,4,2,4,3,2,4,2,2,2,3,3,2,1,2,1,2,3,3,2,4,1,2,
 3,1,1,2,1,3,1,2,4,1,4,2,3,2,4,1,4,2,4,3,3,2,3,3,4,4,1,1,4,4,2,4,3,
 4,3,2,1,4,3,2,1,4,3,1,2,4,4,1,3,3,3,3,3,2,4,1,2,3,3,2,3,1,4,2,2,1,2,3,1]
+
+#Handling Missing Data from List
+#To handle the missing data from the lists, an iteration was needed to remove what was not an integer
+noh_missingData = [z for z in no_of_hits if type(z) ==int]
+nos_missingData = [z for z in no_of_sales if type(z) ==int]
+avsv_missingData = [z for z in average_sales_value if type(z) ==int]
+
+def getMean(x):
+	mean = sum(x)/len(x)
+	return mean
+print("MEAN")
+print("down_time: ",getMean(down_time))
+print("average_user_age: ",getMean(average_user_age))
+print("usability_rating: ",getMean(usability_rating))
+print("no_of_live_days: ",getMean(no_of_live_days))
+print("nos_missingData: ",getMean(nos_missingData))
+print("noh_missingData: ",getMean(noh_missingData))
+print("avsv_missingData: ",getMean(avsv_missingData))
+print("______________________________________________________________")
+# def nonNumeric(x):
+	# invalid = re.compile('[^0-9]')
+	# cleaned = [x for x in no_of_hits if x.isdigit()]
+	# print(cleaned)
+	
+def median(lst):
+    sortedLst = sorted(lst)
+    lstLen = len(lst)
+    index = (lstLen - 1) // 2
+
+    if (lstLen % 2):
+        return sortedLst[index]
+    else:
+        return (sortedLst[index] + sortedLst[index + 1])/2.0
+print("MEDIAN")
+print("average_user_age: ",median(average_user_age))
+print("usability_rating: ",median(usability_rating))
+print("down_time: ",median(down_time))
+print("no_of_live_days: ",median(no_of_live_days))
+print("no_of_hits: ",median(noh_missingData))
+print("no_of_sales: ",median(nos_missingData))
+print("average_sales_value: ",median(avsv_missingData))
+
+def dataRange(x):
+	return max(x) - min(x)
+print("range of no_of_live_days: ", dataRange(no_of_live_days))
+print("range of down_time: ", dataRange(down_time))
+print("range of nos_missingData: ", dataRange(nos_missingData))
+print("range of noh_missingData: ", dataRange(noh_missingData))
+print("range of avsv_missingData: ", dataRange(avsv_missingData))
+print("range of average_user_age: ", dataRange(average_user_age))
+print("range of usability_rating: ", dataRange(usability_rating))
+
+print("______________________________________________________________")
+def variance(x):
+	v = sum(x)/len(x)
+	varRes = sum([(x1 - v)**2 for x1 in x])/len(x)
+	return varRes
+
+print("VARIANCE")
+print("average_user_age: ",variance(average_user_age))
+print("usability_rating: ",variance(usability_rating))
+print("down_time: ",variance(down_time))
+print("no_of_hits: ",variance(noh_missingData))
+print("no_of_sales: ",variance(nos_missingData))
+print("average_sales_value: ",variance(avsv_missingData))
+
+def standardDeviation(x):
+	return math.sqrt(variance(x))
+print("standard deviation of no_of_live_days = ", standardDeviation(no_of_live_days))
+print("standard deviation of down_time = ", standardDeviation(down_time))
+print("standard deviation of the no_of_hits  = ",standardDeviation(noh_missingData))
+print("standard deviation of the no_of_sales  = ",standardDeviation(nos_missingData))
+print("standard deviation of the average_sales_value  = ",standardDeviation(avsv_missingData))
+print("standard deviation of the average_user_age  = ",standardDeviation(average_user_age))
+print("standard deviation of the usability_rating  = ",standardDeviation(usability_rating))
+print("______________________________________________________________")
+def covariance(x,y):
+	x_mean = getMean(x)
+	y_mean = getMean(y)
+	data = [(x[i] - x_mean) * (y[i] - y_mean) for i in range(len(x))]
+	return sum(data)/(len(data)-1)
+	
+print("Covariance")
+print(covariance(average_user_age,usability_rating))
+print("______________________________________________________________")
+def sd(a):
+    return math.sqrt(sum([i*i for i in a])-len(a)*getMean(a)**2)
+print("______________________________________________________________")
+def pearsonCorrelation(x,y):
+    s_x = sd(x)
+    s_y = sd(y)
+    sum_xy = sum([x*y for x,y in zip(x,y)])
+    x_mean = getMean(x)
+    y_mean = getMean(y)
+    n = len(x)
+    return (sum_xy-n*x_mean*y_mean)/(s_x*s_y)
+	
+print("Correlation: ", pearsonCorrelation(no_of_live_days,down_time))
