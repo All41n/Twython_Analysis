@@ -165,3 +165,54 @@ def sumsOfSquares(x):
 print("Sum Of Squares(Live Days): ", sumsOfSquares(no_of_live_days))
 print("Sum Of Squares(Sales Values): ", sumsOfSquares(down_time))
 print("______________________Confidence Interval_____________________")
+#For the confidence interval I made new codes for the mean,stdev,variance
+#covariance and sum of squares. I did this to make sure that the output would be
+#correct
+
+#SciPy is used to handle the confidence interval of both data lists
+#SciPy contains the function norm, in this case I used stats.norm.ppf.
+#ppf/pdf is the probability density function
+#https://docs.scipy.org/doc/scipy-0.19.0/reference/generated/scipy.stats.norm.html
+
+#The two data list I chose was the down time and no of days live. From all of the data sets
+# the two choses are easy to interpret since they are perfect and they contain no missing data
+#that might skew the results.
+def mean(x):
+	return sum(x)/len(x)	
+def mean2(x):
+	xList = mean(x)
+	return[x_i-xList for x_i in x]
+def sumOfSquares(x):
+	return sum([i**2 for i in x])
+def var(x):
+	listLength = len(x)
+	dev = mean2(x)
+	return sumOfSquares(dev)/(x-1)	
+def standard_dev(x):
+	return math.sqrt(variance(x))
+#To obtain the confidence interval of both list,
+#first we need the lenght of the lists and then the mean.
+size1 = len(no_of_live_days)
+mean3 = mean(no_of_live_days)
+pop_stdev = standard_dev(no_of_live_days) 
+size2 = len(down_time)
+mean4 = mean(down_time)
+pop_stdev1 = standard_dev(down_time) 
+statistics = stats.norm.ppf(q = 0.075) 
+m_o_g1 = -statistics * (pop_stdev/math.sqrt(size1))
+cInterval1 = (mean3 - m_o_g1,mean3 + m_o_g1)  					   
+m_o_g2 = -statistics * (pop_stdev1/math.sqrt(size2))
+cInterval2 = (mean4 - m_o_g2,mean4 + m_o_g2)  
+print("Confidence Interval(Live Days):",cInterval1)
+print("Confidence Interval (Down Time):",cInterval2)
+print("live days sample mean: ",mean3)
+print("down time: ", mean4)
+print("live days: ", pop_stdev)
+print("down time: ", pop_stdev1)
+print("_________________________________________________________")
+
+plt.scatter(no_of_live_days,down_time)
+plt.ylabel("No of days live")
+plt.xlabel("Down time")
+plt.title("No of days live vs. Down time")
+plt.show()
