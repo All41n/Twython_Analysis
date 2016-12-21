@@ -46,3 +46,11 @@ def median(x):
     else:
         return (sorting[mid]+sorted[mid]) /2
 print("Median: ",median(tweets_year))
+def dataRange(x):
+	return max(x) - min(x)
+print("range: ", dataRange(tweets_year))
+def deviated_mean(x):
+	x_bar = mean(x)
+	return[x_i-x_bar for x_i in x]	
+def sumSquares(n):
+	return sum([x**2 for x in n])	
