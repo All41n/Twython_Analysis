@@ -135,3 +135,33 @@ def pearsonCorrelation(x,y):
     return (sum_xy-n*x_mean*y_mean)/(s_x*s_y)
 	
 print("Correlation: ", pearsonCorrelation(no_of_live_days,down_time))
+def b0(x,y):
+	return getMean(y) - b1(x,y)*getMean(x)
+	
+def b1(x,y):
+	return (sd(y)/sd(x))*pearsonCorrelation(x,y)
+
+
+def linear_Regression(m,c,x):
+    y=m*x+c
+    return y
+
+b_1 = b1(no_of_live_days,down_time)
+b_0 = b0(no_of_live_days,down_time)
+
+predictedResults = [linear_Regression(b_1,b_0,x) for x in no_of_live_days]
+residual = [x-y for x,y in zip(down_time,predictedResults)]
+plt.scatter(no_of_live_days,down_time)
+line2,= plt.plot(no_of_live_days,predictedResults)
+plt.xlabel("down_time")
+plt.title("Best fit line")
+plt.ylim(ymax = 1300, ymin = -100)
+plt.xticks([i*150 for i in range(-1,8) ])
+plt.show()
+print("______________________________________________________________")
+def sumsOfSquares(x):
+	return sum([i**2 for i in x])
+
+print("Sum Of Squares(Live Days): ", sumsOfSquares(no_of_live_days))
+print("Sum Of Squares(Sales Values): ", sumsOfSquares(down_time))
+print("______________________Confidence Interval_____________________")
