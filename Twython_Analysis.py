@@ -33,3 +33,16 @@ def created(date):
 read_ftweets()
 convert_ftweets_to_dict()
 stored = createdYear(tweets_file)
+print("_____________________STATISTICS___________________________")
+def mean(x):
+    return sum(x)/len(x)
+print("Mean: ",mean(tweets_year))
+def median(x):
+    n = len(x)
+    sorting = sorted(x)
+    mid = n //2
+    if n % 2 == 1:
+        return sorting[mid]
+    else:
+        return (sorting[mid]+sorted[mid]) /2
+print("Median: ",median(tweets_year))
