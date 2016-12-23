@@ -53,4 +53,24 @@ def deviated_mean(x):
 	x_bar = mean(x)
 	return[x_i-x_bar for x_i in x]	
 def sumSquares(n):
-	return sum([x**2 for x in n])	
+	return sum([x**2 for x in n])
+def variance(x):
+	n = len(x)
+	deviate = deviated_mean(x)
+	return sumSquares(deviate)/(n-1)
+print("Variance:", variance(tweets_year))
+def standardDeviation(x):
+	return math.sqrt(variance(x))
+print("standard deviation: ", standardDeviation(stored))
+
+twitterData = Counter(x for x in stored)
+print(twitterData)
+
+size = 50
+mean1 = mean(stored)
+population = standardDeviation(stored) 
+print(len(stored))
+statistics = stats.norm.ppf(q = 0.05) 
+m_o_g = -statistics * (population/math.sqrt(size))
+Interval = (mean1 - m_o_g,mean1 + m_o_g)  					   
+print("Confidence interval of tweets_year:",Interval)	
